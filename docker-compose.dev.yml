@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  db_pmr_dev:
+    image: mariadb
+    restart: on-failure
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: pmrdb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+  
+  backend_dev:
+    build:
+      context: BackendPMRApp
+      dockerfile: dev.dockerfile
+    working_dir: /usr/src/backend
+    volumes:
+      - ./BackendPMRApp/:/usr/src/backend
+    ports:
+      - '8080:8080'
+    expose:
+      - '8080'
+    command: mvn spring-boot:run
+    links:
+      - db_pmr_dev:mariadb
+      
