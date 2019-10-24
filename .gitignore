@@ -1,2 +1,3 @@
 /BackendPMRApp/target/
 *.vpp.bak*
+*.vpp.lck
