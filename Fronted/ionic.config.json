@@ -1,0 +1,7 @@
+{
+  "name": "Fronted",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

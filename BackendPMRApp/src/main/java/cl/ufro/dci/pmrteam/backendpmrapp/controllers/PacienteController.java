@@ -5,28 +5,30 @@
  */
 package cl.ufro.dci.pmrteam.backendpmrapp.controllers;
 
+import cl.ufro.dci.pmrteam.backendpmrapp.Validars.RutValidator;
 import cl.ufro.dci.pmrteam.backendpmrapp.models.Paciente;
 import cl.ufro.dci.pmrteam.backendpmrapp.repositorys.PacienteRepository;
-import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
  * @author ghuerta
  */
+@RepositoryRestController
 @RestController
-@RequestMapping("pacientes")
+@RequestMapping("paciente")
 public class PacienteController {
     
     @Autowired
-    private PacienteRepository pacienteRepository;
+    private PacienteRepository patientRepo;
     
-    
-    @GetMapping
-    public ArrayList<Paciente> indexAll(){
-        return (ArrayList<Paciente>)this.pacienteRepository.findAll();
+    @GetMapping("byRun")
+    public Paciente indexByRun(@RequestParam("run") String run){
+        return RutValidator.validaRut(run) ? this.patientRepo.findByrun(run) : null ;
     }
 }

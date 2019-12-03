@@ -1,0 +1,36 @@
+<ion-content>
+  <ion-grid >
+    <ion-row>
+        <ion-col>
+          </ion-col>
+          <ion-col></ion-col>
+          <ion-col></ion-col>
+    </ion-row>
+    <ion-row class="align-items-center">
+      <ion-col></ion-col>
+        <ion-col class="col-md-6 col-8 align-self-center"  >
+            <div class="ml-5 pl-3 mr-3 pt-5">
+              <form [formGroup]="formRut" (ngSubmit)="onSubmit()">
+                <mat-form-field class="col-md-3 col-3  pl-0 pr-0">
+                  <mat-label>Run</mat-label>
+                  <input maxlength="10" formControlName="rut" matInput name="rut" [(ngModel)]="rut"
+                    placeholder="Ingrese su run" required>
+                </mat-form-field>
+                -
+                <mat-form-field class="col-md-3 col-3 pl-0 pr-5">
+                  <input matInput formControlName="digitador" name="digitador" [(ngModel)]="digitador">
+                </mat-form-field>
+                <button type="submit" [disabled]="!formRut.valid" mat-button>Ingresar</button>
+              </form>
+            </div>
+          </ion-col>
+          <ion-col></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+      </ion-col>
+      <ion-col></ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

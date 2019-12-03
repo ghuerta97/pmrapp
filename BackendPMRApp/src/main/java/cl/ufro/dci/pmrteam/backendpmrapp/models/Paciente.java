@@ -1,66 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cl.ufro.dci.pmrteam.backendpmrapp.models;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-
-/**
- *
- * @author ghuerta
- */
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.rest.core.annotation.RestResource;
 @Entity
+@Data
 public class Paciente implements Serializable {
     
     @Id
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    @NotNull
     private String nombres;
-    
-    @NotNull
     private String apellidos;
-    
-    @NotNull
     private String run;
+    private boolean cronico;
+    @CreationTimestamp
+    @Column( nullable = false)
+    private Timestamp createdAtPaciente;
+    @OneToOne
+    public Usuario usuario;
+    @OneToOne
+    public Cesfam cesfam;
+    @OneToMany
+    public List<HoraEspecialista> horaEspecialista;
+    @OneToMany
+    public List<Alerta> alerta;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNombres() {
-        return nombres;
-    }
-
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public String getRun() {
-        return run;
-    }
-
-    public void setRun(String run) {
-        this.run = run;
-    }
-    
-    
 }

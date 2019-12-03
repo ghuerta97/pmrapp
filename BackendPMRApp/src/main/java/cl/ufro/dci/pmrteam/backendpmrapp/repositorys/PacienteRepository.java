@@ -7,11 +7,14 @@ package cl.ufro.dci.pmrteam.backendpmrapp.repositorys;
 
 import cl.ufro.dci.pmrteam.backendpmrapp.models.Paciente;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
  *
  * @author ghuerta
  */
+@RepositoryRestResource(path = "paciente",collectionResourceRel = "patients")
 public interface PacienteRepository extends CrudRepository<Paciente, Long>{
     
+    Paciente findByrun(String run);
 }
