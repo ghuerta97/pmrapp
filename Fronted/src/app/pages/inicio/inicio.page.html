@@ -1,36 +1,84 @@
 <ion-content>
-  <ion-grid >
-    <ion-row>
-        <ion-col>
-          </ion-col>
-          <ion-col></ion-col>
-          <ion-col></ion-col>
-    </ion-row>
-    <ion-row class="align-items-center">
-      <ion-col></ion-col>
-        <ion-col class="col-md-6 col-8 align-self-center"  >
-            <div class="ml-5 pl-3 mr-3 pt-5">
-              <form [formGroup]="formRut" (ngSubmit)="onSubmit()">
-                <mat-form-field class="col-md-3 col-3  pl-0 pr-0">
-                  <mat-label>Run</mat-label>
-                  <input maxlength="10" formControlName="rut" matInput name="rut" [(ngModel)]="rut"
-                    placeholder="Ingrese su run" required>
-                </mat-form-field>
-                -
-                <mat-form-field class="col-md-3 col-3 pl-0 pr-5">
-                  <input matInput formControlName="digitador" name="digitador" [(ngModel)]="digitador">
-                </mat-form-field>
-                <button type="submit" [disabled]="!formRut.valid" mat-button>Ingresar</button>
-              </form>
+  <div *ngIf="!session">
+      <div class="wrapper wrapper-full-page">
+          <div class="full-page login-page"  data-image="./assets/img/background-2.jpg">
+            <div class="content">
+              <div class="container">
+                <div class="row">
+                  <div [class]="col+' col-md-4 col-sm-6 col-sm-offset-3' "  >
+                    <form [formGroup]="formRut" (ngSubmit)="onSubmit()" class="ng-untouched ng-pristine ng-valid">
+                      <div class="card">
+                        <div class="header text-center">Bienvenido a PMRApp</div>
+                        <div class="content">
+                          <div class="form-group">
+                            <label>Rut</label>
+                            <input #inputRut name="rut" id="rut" formControlName="rut" class="form-control" placeholder="xx.xxx.xxx-x" type="text" (keyup.enter)="onSubmit()" >
+                          </div>
+                        </div>
+                        <div class="footer text-center">
+                          <button class="btn btn-fill btn-danger btn-wd" type="submit">Enter</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
-          </ion-col>
-          <ion-col></ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-      </ion-col>
-      <ion-col></ion-col>
-      <ion-col></ion-col>
-    </ion-row>
-  </ion-grid>
+            <div class="full-page-background" style="background-image: url(./assets/img/background-2.jpg) "></div>
+          </div>
+        </div>
+  </div>
+<app-login *ngIf="proceso"  ></app-login>
+  <div *ngIf="session && !proceso">
+    <div class="wrapper wrapper-full-page">
+      <div class="full-page login-page"  data-image="./assets/img/background-2.jpg">
+    
+        <!-- <div class="header">
+          CondomiumApp
+        </div> -->
+    
+        <div class="content">
+          <div class="container">
+            <div class="row">
+              <div [class]="col+' col-md-4 col-sm-6 col-sm-offset-3' "  >
+                <form action="#" method="#" novalidate="" class="ng-untouched ng-pristine ng-valid">
+                  <div class="card">
+                    <div class="header text-center">Login</div>
+                    <div class="content">
+                      <div class="form-group">
+                        <label>Email address</label>
+                        <input class="form-control" placeholder="Enter email" type="email"></div>
+                      <div class="form-group">
+                        <label>Password</label>
+                        <input class="form-control" placeholder="Password"
+                          type="password">
+                      </div>
+                    </div>
+                    <div class="footer text-center">
+                      <button class="btn btn-fill btn-danger btn-wd" type="submit">Login</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <footer class="footer footer-transparent">
+          <div class="container">
+            <nav class="pull-left">
+              <ul>
+                <li><a href="#"> Home </a></li>
+                <li><a href="#"> Company </a></li>
+                <li><a href="#"> Portfolio </a></li>
+                <li><a href="#"> Blog </a></li>
+              </ul>
+            </nav>
+            <p class="copyright pull-right"> © 2019 <a href="#">Creative Tim</a>, made with love
+              for a better web </p>
+          </div>
+        </footer> -->
+        <div class="full-page-background" style="background-image: url(./assets/img/background-2.jpg) "></div>
+      </div>
+    </div>
+  </div>
 </ion-content>

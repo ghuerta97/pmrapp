@@ -1,7 +1,7 @@
 FROM debian:stretch-slim
 
 #Instalar Node.js 8.16.0
-COPY --from=node:8.16.0 / /
+COPY --from=node:10.17.0 / /
 # Instalar Maven 3.6.1 + Correcto 8
 COPY --from=maven:3.6.1-amazoncorretto-8 / /
 #Instalar Gradle 5.4.1

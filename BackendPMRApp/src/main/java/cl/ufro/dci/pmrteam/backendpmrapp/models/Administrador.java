@@ -26,9 +26,9 @@ public class Administrador {
     @CreationTimestamp
     @Column( nullable = false)
     private Timestamp createdAtAdmi;
-    @ManyToOne
+    @ManyToOne(optional = false)
     public Cesfam cesfam;
-    @OneToOne
+    @OneToOne(optional = true)
     public Usuario usuario;
 
 

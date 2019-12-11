@@ -9,7 +9,7 @@ services:
       MYSQL_DATABASE: pmrdb
       MYSQL_USER: root
       MYSQL_PASSWORD: root
-  
+
   backend_dev:
     build:
       context: BackendPMRApp
@@ -23,7 +23,7 @@ services:
       - '8080'
     command: mvn spring-boot:run
     links:
-      - db_pmr_dev:mariadb
+      - db_pmr_dev:mariadblink
   fronted_dev:
     build:
       context: Fronted

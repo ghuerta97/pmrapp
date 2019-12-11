@@ -17,4 +17,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface PacienteRepository extends CrudRepository<Paciente, Long>{
     
     Paciente findByrun(String run);
+    @Override
+    Paciente save(Paciente paciente);
 }
