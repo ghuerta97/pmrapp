@@ -10,9 +10,9 @@ import {Ng2Rut} from 'ng2-rut';
 import {IonicStorageModule} from '@ionic/storage';
 
 import { InicioPage } from './inicio.page';
-import { LoginComponent } from 'src/app/components/login/login.component';
+import { LoadingComponent } from 'src/app/components/loading/loading.component';
 @NgModule({
-  imports: [
+  imports: [ 
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -22,6 +22,6 @@ import { LoginComponent } from 'src/app/components/login/login.component';
     Ng2Rut,
     IonicStorageModule.forRoot()
   ],
-  declarations: [InicioPage, LoginComponent]
+  declarations: [InicioPage, LoadingComponent]
 })
 export class InicioPageModule {}

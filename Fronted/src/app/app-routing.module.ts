@@ -2,20 +2,14 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  //  { path: 'login', loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)}, 
   {
     path: '',
     loadChildren: () => import('./pages/inicio/inicio.module').then( m => m.InicioPageModule)
   },
   {
-    path: '',
-    redirectTo: localStorage.getItem('session') ? 'login' : '', 
-    pathMatch: 'full'
-  },
-  // {
-  //   path: 'login',
-  //   loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
-  // }
+    path: 'principal',
+    loadChildren: () => import('./pages/principal/principal.module').then( m => m.PrincipalPageModule)
+  }
 ];
 
 @NgModule({

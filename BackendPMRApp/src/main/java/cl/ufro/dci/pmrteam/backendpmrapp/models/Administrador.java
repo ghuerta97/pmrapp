@@ -24,7 +24,7 @@ public class Administrador {
     @Column
     private String run;
     @CreationTimestamp
-    @Column( nullable = false)
+    @Column( nullable = true)
     private Timestamp createdAtAdmi;
     @ManyToOne(optional = false)
     public Cesfam cesfam;

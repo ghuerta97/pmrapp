@@ -9,6 +9,8 @@ services:
       MYSQL_DATABASE: pmrdb
       MYSQL_USER: root
       MYSQL_PASSWORD: root
+    networks: 
+      - backend
 
   backend_dev:
     build:
@@ -22,8 +24,9 @@ services:
     expose:
       - '8080'
     command: mvn spring-boot:run
-    links:
-      - db_pmr_dev:mariadblink
+    networks: 
+      - backend
+
   fronted_dev:
     build:
       context: Fronted
@@ -33,4 +36,5 @@ services:
       - ./Fronted/:/usr/src/fronted
       - /usr/src/fronted/node_modules
     command: /bin/sh ionic.sh
-      
+networks: 
+  backend:

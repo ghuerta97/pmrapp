@@ -12,11 +12,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.rest.core.annotation.RestResource;
 @Entity
 @Data
+@AllArgsConstructor
 public class Paciente implements Serializable {
     
     @Id
@@ -27,10 +29,15 @@ public class Paciente implements Serializable {
     private String run;
     private boolean cronico;
     @CreationTimestamp
-    @Column( nullable = false)
+    @Column( nullable = true)
     private Timestamp createdAtPaciente;
     @OneToOne
     public Usuario usuario;
     @OneToOne(optional = false)
     public Cesfam cesfam;
+
+    public Paciente() {
+    }
+    
+    
 }

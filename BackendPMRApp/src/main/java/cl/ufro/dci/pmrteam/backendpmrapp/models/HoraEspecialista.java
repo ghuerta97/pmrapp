@@ -22,7 +22,7 @@ public class HoraEspecialista {
     private Time horaConsulta;
     private Date fechaConsulta;
     @CreationTimestamp
-    @Column( nullable = false)
+    @Column( nullable = true)
     private Timestamp ingresada;
     @OneToOne
     public Cesfam cesfam;
@@ -32,5 +32,7 @@ public class HoraEspecialista {
     public Paciente paciente;
     @OneToOne
     public Alerta alerta;
+    @OneToOne
+    public Especialidad especialidad;
 
 }

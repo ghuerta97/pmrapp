@@ -14,6 +14,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  * @author ghuerta
  */
 @RepositoryRestResource(path = "cesfam", collectionResourceRel = "cesfams")
-public interface CesfamRepository extends CrudRepository<Cesfam, Long>{
+public interface CesfamRepository extends CrudRepository<Cesfam, Long> {
     
 }

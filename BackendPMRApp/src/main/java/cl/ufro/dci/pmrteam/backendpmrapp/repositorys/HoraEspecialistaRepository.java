@@ -5,7 +5,9 @@
  */
 package cl.ufro.dci.pmrteam.backendpmrapp.repositorys;
 
+import cl.ufro.dci.pmrteam.backendpmrapp.models.Especialidad;
 import cl.ufro.dci.pmrteam.backendpmrapp.models.HoraEspecialista;
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -16,4 +18,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource(path = "hora", collectionResourceRel = "hours")
 public interface HoraEspecialistaRepository extends CrudRepository<HoraEspecialista, Long>{
     
+    List<HoraEspecialista> findAllByespecialidad(Especialidad especialidad);
 }

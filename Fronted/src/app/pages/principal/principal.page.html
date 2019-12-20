@@ -1,0 +1,20 @@
+<app-toolbar class="toolbar" [side]="snav" #toolbar2  isMobile="true" ></app-toolbar>
+<mat-sidenav-container class="example-container" >
+   
+  <mat-sidenav #snav [mode]="mode" opened="true" position="start">
+      <!-- <mat-toolbar color="primary" style="margin-top:0px;"> 
+        PMRApp
+        <button slot="end" mat-icon-button (click)="snav.toggle()" >
+          <mat-icon>close</mat-icon>
+        </button>
+        </mat-toolbar> -->
+    <mat-nav-list>
+      <mat-list-item  routerLink="{{item.path}}" (click)="snav.toggle()" *ngFor="let item of menu">
+              {{ item.title }}
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav >
+  <mat-sidenav-content>
+      <ion-router-outlet></ion-router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

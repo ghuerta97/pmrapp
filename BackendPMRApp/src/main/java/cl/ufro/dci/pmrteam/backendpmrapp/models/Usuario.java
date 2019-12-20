@@ -17,7 +17,7 @@ public class Usuario {
     private Long id;
     private String name;
     @CreationTimestamp
-    @Column( nullable = false)
+    @Column( nullable = true)
     private Timestamp createdAtUser;
 
 }

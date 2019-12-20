@@ -6,13 +6,13 @@
               <div class="container">
                 <div class="row">
                   <div [class]="col+' col-md-4 col-sm-6 col-sm-offset-3' "  >
-                    <form [formGroup]="formRut" (ngSubmit)="onSubmit()" class="ng-untouched ng-pristine ng-valid">
+                    <form [formGroup]="formRut" (ngSubmit)="onSubmit(inputRut)" class="ng-untouched ng-pristine ng-valid">
                       <div class="card">
                         <div class="header text-center">Bienvenido a PMRApp</div>
                         <div class="content">
                           <div class="form-group">
                             <label>Rut</label>
-                            <input #inputRut name="rut" id="rut" formControlName="rut" class="form-control" placeholder="xx.xxx.xxx-x" type="text" (keyup.enter)="onSubmit()" >
+                            <input #inputRut name="rut" id="rut" formControlName="rut" class="form-control" placeholder="xx.xxx.xxx-x" type="text" (keyup.enter)="onSubmit(inputRut)" >
                           </div>
                         </div>
                         <div class="footer text-center">
@@ -28,14 +28,10 @@
           </div>
         </div>
   </div>
-<app-login *ngIf="proceso"  ></app-login>
+  <app-loading *ngIf="proceso"></app-loading>
   <div *ngIf="session && !proceso">
     <div class="wrapper wrapper-full-page">
       <div class="full-page login-page"  data-image="./assets/img/background-2.jpg">
-    
-        <!-- <div class="header">
-          CondomiumApp
-        </div> -->
     
         <div class="content">
           <div class="container">
@@ -43,7 +39,9 @@
               <div [class]="col+' col-md-4 col-sm-6 col-sm-offset-3' "  >
                 <form action="#" method="#" novalidate="" class="ng-untouched ng-pristine ng-valid">
                   <div class="card">
-                    <div class="header text-center">Login</div>
+                    <div *ngIf="paciente" class="header text-center">
+                       Bienvenido a  {{  paciente.cesfam.nombre | uppercase }}                       
+                    </div>
                     <div class="content">
                       <div class="form-group">
                         <label>Email address</label>
@@ -55,7 +53,7 @@
                       </div>
                     </div>
                     <div class="footer text-center">
-                      <button class="btn btn-fill btn-danger btn-wd" type="submit">Login</button>
+                      <button class="btn btn-fill btn-danger btn-wd" routerLink="principal" type="submit">Login</button>
                     </div>
                   </div>
                 </form>

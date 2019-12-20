@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import $ from 'jquery';
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-loading',
+  templateUrl: './loading.component.html',
+  styleUrls: ['./loading.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoadingComponent implements OnInit {
 
   public col: string = 'col-md-offset-4';
   constructor() { }

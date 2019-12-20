@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.rest.core.annotation.RestResource;
@@ -24,9 +25,10 @@ public class Medico {
     private String nombres;
     private String apellidos;
     private String run;
-    private String especialidad;
+    @OneToOne
+    private Especialidad especialidad;
     @CreationTimestamp
-    @Column( nullable = false)
+    @Column( nullable = true)
     private Timestamp createdAtProfesional;
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Cesfam cesfam;

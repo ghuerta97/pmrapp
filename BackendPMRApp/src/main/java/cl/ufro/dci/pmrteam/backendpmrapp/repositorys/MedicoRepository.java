@@ -5,7 +5,9 @@
  */
 package cl.ufro.dci.pmrteam.backendpmrapp.repositorys;
 
+import cl.ufro.dci.pmrteam.backendpmrapp.models.Especialidad;
 import cl.ufro.dci.pmrteam.backendpmrapp.models.Medico;
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
@@ -13,7 +15,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  *
  * @author ghuerta
  */
-@RepositoryRestResource(path = "medico",collectionResourceRel = "medics")
+@RepositoryRestResource(path = "medico", collectionResourceRel = "medics")
 public interface MedicoRepository extends CrudRepository<Medico, Long>{
-    
+    List<Medico> findAllByespecialidad(Especialidad especialidad);
 }

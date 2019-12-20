@@ -27,7 +27,7 @@ public class Cesfam {
     @Column
     private ArrayList<String> telefonos;
     @CreationTimestamp
-    @Column( nullable = false)
+    @Column( nullable = true)
     private Timestamp createdAtCesfam;
     @OneToMany
     public List<Paciente> paciente;

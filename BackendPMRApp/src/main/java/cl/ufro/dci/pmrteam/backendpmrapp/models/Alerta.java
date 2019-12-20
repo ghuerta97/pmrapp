@@ -24,7 +24,7 @@ public class Alerta {
     @Column
     private String comentario;
     @CreationTimestamp
-    @Column( nullable = false)
+    @Column( nullable = true)
     private Timestamp createdAtAlert;
     @ManyToOne
     public HoraEspecialista horaEspecialista;
