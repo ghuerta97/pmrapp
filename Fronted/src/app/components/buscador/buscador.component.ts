@@ -29,7 +29,9 @@ export class BuscadorComponent implements OnInit {
     this.horaService.getHorasEspecilistas(search).pipe(finalize(() => loading.dismiss()))
       .subscribe(result => {
         console.log(result);
-        this.result.emit(result);
+        if(result) {
+          this.result.emit(result);
+        }
       }, error => {
 
       })
