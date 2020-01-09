@@ -13,6 +13,6 @@ export class HorasService {
   constructor(private http: HttpClient, private nativeHttp: HTTP) { }
 
   getHorasEspecilistas(search): Observable<HoraEspecialista[]> {
-    return this.http.get<HoraEspecialista[]>(environment.path+'hora/byEspecialidad?nombre='+search);
+    return this.http.get<HoraEspecialista[]>(environment.api+'hora/byEspecialidad?nombre='+search);
   }
 }

@@ -19,5 +19,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RepositoryRestResource(path = "usuario",collectionResourceRel = "users")
 public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
-   Usuario findByname(@Param("name") String name);
+   Usuario findByusername(@Param("username") String name);
 }

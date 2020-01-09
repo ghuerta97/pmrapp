@@ -10,7 +10,6 @@ import cl.ufro.dci.pmrteam.backendpmrapp.repositorys.UsuarioRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.querydsl.core.types.Predicate;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
@@ -29,7 +28,7 @@ public class UsuarioController {
     private UsuarioRepository userRepo;
     
     @GetMapping("byName")
-    public Usuario indexName(@RequestParam("name") String name){
-        return userRepo.findByname(name);
+    public Usuario indexName(@RequestParam("username") String username){
+        return userRepo.findByusername(username);
     }
 }

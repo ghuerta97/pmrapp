@@ -13,10 +13,10 @@ export class PacienteService {
   constructor(private http: HttpClient, private plt: Platform, private http2: HTTP) { }
 
   getPacienteWithRun(rut: string): Observable<Paciente>{
-    return this.http.get<Paciente>(environment.path+'paciente/byRun?run='+rut);  
+    return this.http.get<Paciente>(environment.api+'paciente/byRun?run='+rut);  
   }
 
   getPacienteWithRunCordova(rut: string){
-    return this.http2.get(environment.path+'paciente/byRun?run='+rut,{},{}) ;
+    return this.http2.get(environment.api+'paciente/byRun?run='+rut,{},{}) ;
   }
 }

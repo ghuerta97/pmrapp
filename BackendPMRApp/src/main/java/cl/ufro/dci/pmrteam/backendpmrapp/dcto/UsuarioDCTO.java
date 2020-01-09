@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cl.ufro.dci.pmrteam.backendpmrapp.services;
-
-import cl.ufro.dci.pmrteam.backendpmrapp.models.Cesfam;
+package cl.ufro.dci.pmrteam.backendpmrapp.dcto;
 
 /**
  *
  * @author root
  */
-public interface CesfamService {
-    public Cesfam updateCesfam(Long id, Cesfam cesfam);
+public class UsuarioDCTO {
+    
 }
