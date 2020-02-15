@@ -21,6 +21,9 @@ public class HoraEspecialista {
     private Long id;
     private Time horaConsulta;
     private Date fechaConsulta;
+    private boolean realizada;
+    @Column(nullable = true)
+    private String observacion;
     @CreationTimestamp
     @Column( nullable = true)
     private Timestamp ingresada;

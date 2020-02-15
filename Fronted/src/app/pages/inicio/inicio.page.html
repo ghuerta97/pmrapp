@@ -12,7 +12,7 @@
                         <div class="content">
                           <div class="form-group">
                             <label>Rut</label>
-                            <input #inputRut name="rut" id="rut" formControlName="rut" class="form-control" placeholder="xx.xxx.xxx-x" type="text" (keyup.enter)="onSubmit(inputRut)" >
+                            <input #inputRut [textMask]="{mask: mask}" guide="false" name="rut" id="rut" formControlName="rut" class="form-control" placeholder="xx.xxx.xxx-x" type="text" (keyup.enter)="onSubmit(inputRut)" >
                           </div>
                         </div>
                         <div class="footer text-center">

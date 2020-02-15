@@ -26,7 +26,7 @@ import { Network } from '@ionic-native/network/ngx';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
     HttpClientModule,
-    HttpModule, 
+    HttpModule
   ],
   providers: [
     StatusBar,

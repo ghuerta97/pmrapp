@@ -14,11 +14,13 @@ import { Paciente } from 'src/app/models/paciente';
 export class InicioPage implements OnInit, OnChanges {
   
   public col: string = 'col-md-offset-4';
-  public rut: string = '';
+  public rut: string ;
   public formRut: FormGroup;
   public session: boolean = false;
   public proceso: boolean = false;
   public paciente: Paciente;
+
+  mask = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.' , /\d/, /\d/, /\d/, '-',  /[0-9|k]/ ]
   constructor(
     private fb: FormBuilder,
     private rutValidator: RutValidator,
@@ -31,9 +33,9 @@ export class InicioPage implements OnInit, OnChanges {
       rut: ['', [Validators.required, this.rutValidator, Validators.maxLength(10)]]
     });
     this.storage.get('rut').then((val) => {
-      this.rut = val;
+      this.rut = ''+val;
+      this.plt.is("cordova") ? this.getPersonCordova() : this.getPerson();
     })
-    this.plt.is("cordova") ? this.getPersonCordova() : this.getPerson();
   }
 
   ngOnInit() {
@@ -63,7 +65,6 @@ export class InicioPage implements OnInit, OnChanges {
 
   getPersonCordova(){
     this.pacienteService.getPacienteWithRunCordova(this.rut).then((response) => {
-      console.log(response);
     })
   }
 

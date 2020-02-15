@@ -11,6 +11,9 @@ import {IonicStorageModule} from '@ionic/storage';
 
 import { InicioPage } from './inicio.page';
 import { LoadingComponent } from 'src/app/components/loading/loading.component';
+
+import { TextMaskModule } from 'angular2-text-mask';
+
 @NgModule({
   imports: [ 
     CommonModule,
@@ -19,7 +22,8 @@ import { LoadingComponent } from 'src/app/components/loading/loading.component';
     IonicModule,
     InicioPageRoutingModule,
     AngularMaterialModule,
-    Ng2Rut,
+    Ng2Rut, 
+    TextMaskModule,
     IonicStorageModule.forRoot()
   ],
   declarations: [InicioPage, LoadingComponent]

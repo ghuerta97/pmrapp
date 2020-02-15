@@ -9,7 +9,7 @@
         </button>
         </mat-toolbar> -->
     <mat-nav-list>
-      <mat-list-item  routerLink="{{item.path}}" (click)="snav.toggle()" *ngFor="let item of menu">
+      <mat-list-item [routerLink]="['/','principal',item.path]" (click)="snav.toggle()" *ngFor="let item of menu">
               {{ item.title }}
       </mat-list-item>
     </mat-nav-list>

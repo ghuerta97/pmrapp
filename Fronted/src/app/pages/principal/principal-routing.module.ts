@@ -12,6 +12,18 @@ const routes: Routes = [
         path: 'buscador',
         loadChildren: () => import('../horas-buscador/horas-buscador.module').then( m => m.HorasBuscadorPageModule)
       },
+      {
+        path: 'horas-solicitadas',
+        loadChildren: () => import('../horas-solicitadas/horas-solicitadas.module').then(m => m.HorasSolicitadasPageModule)
+      },
+      {
+        path: 'historial-horas',
+        loadChildren: () => import('../historial-horas/historial-horas.module').then( m => m.HistorialHorasPageModule)
+      },
+      {
+        path: 'info-cesfam',
+        loadChildren: () => import('../info-cesfam/info-cesfam.module').then( m => m.InfoCesfamPageModule)
+      }
     ]
   }
 ];

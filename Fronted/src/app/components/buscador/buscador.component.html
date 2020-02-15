@@ -1,4 +1,25 @@
-<mat-form-field>
-  <input #search type="texto" matInput placeholder="Buscar especialidad" required>
-  <mat-icon matSuffix (click)="buscarHoras(search.value)">search</mat-icon>
-</mat-form-field>
+<div class="row">
+  <div class="col-md-10 col-10">
+    <mat-form-field>
+      <mat-label >Seleccione las especialidades a buscar</mat-label>
+      <mat-select #select multiple >
+        <mat-select-trigger *ngIf="select.selected.length > 1">
+          {{select.selected[0].value ? select.selected[0].value.nombre : ''}}
+          <span *ngIf="select.selected?.length > 1" class="example-additional-selection">
+            (+{{select.selected.length - 1}} {{select.selected?.length === 2 ? 'other' : 'others'}})
+          </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let especialidad of especialidades" [value]="especialidad">
+          {{especialidad.nombre}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-md-2 col-2">
+    <button mat-icon-button color="primary" aria-label="Example icon-button with a heart icon" (click)="buscarHoras(select.selected)">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+</div>
+
+

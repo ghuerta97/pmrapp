@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { PrincipalPageRoutingModule } from './principal-routing.module';
 
 import { PrincipalPage } from './principal.page';
-import { AngularMaterialModule } from 'src/app/angularmaterial.module';
+import { AngularMaterialModule } from '../../angularmaterial.module';
 import { ToolbarComponent } from 'src/app/components/toolbar/toolbar.component';
 
 @NgModule({

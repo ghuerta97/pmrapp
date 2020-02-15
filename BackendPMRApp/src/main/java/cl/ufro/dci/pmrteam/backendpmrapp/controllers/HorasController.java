@@ -12,6 +12,7 @@ import cl.ufro.dci.pmrteam.backendpmrapp.repositorys.EspecialidadRepository;
 import cl.ufro.dci.pmrteam.backendpmrapp.repositorys.HoraEspecialistaRepository;
 import cl.ufro.dci.pmrteam.backendpmrapp.repositorys.MedicoRepository;
 import cl.ufro.dci.pmrteam.backendpmrapp.repositorys.PacienteRepository;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -62,5 +63,10 @@ public class HorasController {
             return horaEspecialista;
         }
         return null;
+    }
+    
+    @GetMapping("between")
+    public List<HoraEspecialista> getListBetweenDate(@RequestParam("paciente") Long id ,@RequestParam("start") Date start, @RequestParam("end") Date end) {
+        return this.horasRepository.findBypacienteAndfechaConsultaBetween(id, start, end);
     }
 }

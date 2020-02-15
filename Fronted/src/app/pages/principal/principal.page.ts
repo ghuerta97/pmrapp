@@ -16,9 +16,9 @@ export class PrincipalPage implements OnInit, AfterViewInit, OnChanges {
 
   public menu: Menu[] = [
     {path: 'buscador', title: 'Buscador de horas'},
-    {path: '', title: 'Horas solicitadas'},
-    {path: '', title: 'Historial de horas'},
-    {path: '', title: 'Información Cesfam'}
+    {path: 'horas-solicitadas', title: 'Horas solicitadas'},
+    {path: 'historial-horas', title: 'Historial de horas'},
+    {path: 'info-cesfam', title: 'Información Cesfam'}
   ]; 
 
   constructor() {}

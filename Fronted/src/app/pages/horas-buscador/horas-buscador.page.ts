@@ -17,9 +17,7 @@ export class HorasBuscadorPage implements OnInit, AfterViewInit {
   constructor() { }
 
   ngOnInit() {
-
       this.dataSource.paginator = this.paginator;
-      console.log("paginator")
   }
   ngAfterViewInit(){
     
