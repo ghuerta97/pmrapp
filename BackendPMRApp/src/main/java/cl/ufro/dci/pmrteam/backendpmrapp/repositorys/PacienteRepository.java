@@ -10,17 +10,20 @@ import cl.ufro.dci.pmrteam.backendpmrapp.models.Paciente;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  *
  * @author ghuerta
  */
 //@CrossOrigin("http://localhost:4200")
+
 @RepositoryRestResource(path = "paciente",collectionResourceRel = "patients")
 public interface PacienteRepository extends CrudRepository<Paciente, Long>{
-    
+    @PreAuthorize("hasRole('ROLE_PACIENTE')")
     Paciente findByrun(String run);
     @Override
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     Paciente save(Paciente paciente);
     
     List<Paciente> findBycesfam(Cesfam cesfam);

@@ -1,5 +1,7 @@
+
 package cl.ufro.dci.pmrteam.backendpmrapp.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +15,9 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 @Entity
 @Data
-public class Cesfam {
+public class Cesfam implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "cesfam_sequence")
     private Long id;
     @Column
     private String nombre;
@@ -28,11 +30,5 @@ public class Cesfam {
     @CreationTimestamp
     @Column( nullable = true)
     private Timestamp createdAtCesfam;
-    @OneToMany
-    public List<Paciente> paciente;
-    @OneToMany
-    public List<Medico> medico;
-    @OneToMany
-    public List<Administrador> administrador2;
 
 }

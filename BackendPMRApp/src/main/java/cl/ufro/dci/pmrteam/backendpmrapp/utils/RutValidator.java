@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package cl.ufro.dci.pmrteam.backendpmrapp.Validars;
+package cl.ufro.dci.pmrteam.backendpmrapp.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

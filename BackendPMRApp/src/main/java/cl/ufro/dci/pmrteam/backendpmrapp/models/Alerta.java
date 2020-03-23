@@ -15,7 +15,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 @Data
 public class Alerta {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "alerta_sequence")
     private Long id;
     @Column
     private Timestamp fechaAlarma;

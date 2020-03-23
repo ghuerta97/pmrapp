@@ -20,7 +20,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 @Data
 public class Medico {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "medico_sequence")
     private Long id;
     private String nombres;
     private String apellidos;

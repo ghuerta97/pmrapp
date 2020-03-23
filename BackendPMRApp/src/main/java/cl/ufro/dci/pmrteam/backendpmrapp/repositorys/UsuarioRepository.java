@@ -9,6 +9,7 @@ import cl.ufro.dci.pmrteam.backendpmrapp.models.Usuario;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,4 +21,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
    Usuario findByusername(@Param("username") String name);
+   
 }

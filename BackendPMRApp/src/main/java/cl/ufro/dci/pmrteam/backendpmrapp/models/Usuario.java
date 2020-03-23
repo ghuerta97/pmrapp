@@ -9,14 +9,13 @@ import javax.persistence.Id;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.rest.core.annotation.RestResource;
 
 @Entity
 @Data
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "usuario_sequence")
     private Integer id;
 
     @Size(min = 4, max = 255, message = "Minimum username length: 4 characters")
@@ -34,5 +33,5 @@ public class Usuario {
     @CreationTimestamp
     @Column(nullable = true)
     private Timestamp createdAtUser;
-
+    
 }

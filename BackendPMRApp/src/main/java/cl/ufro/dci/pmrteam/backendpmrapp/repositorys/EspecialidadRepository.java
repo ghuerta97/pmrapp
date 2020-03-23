@@ -6,16 +6,17 @@
 package cl.ufro.dci.pmrteam.backendpmrapp.repositorys;
 
 import cl.ufro.dci.pmrteam.backendpmrapp.models.Especialidad;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  *
  * @author root
  */
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RepositoryRestResource(path = "especialidad", collectionResourceRel = "especialidad")
 public interface EspecialidadRepository extends CrudRepository<Especialidad, Long>{
 

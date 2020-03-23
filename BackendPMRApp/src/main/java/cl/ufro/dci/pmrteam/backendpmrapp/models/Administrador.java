@@ -15,7 +15,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 @Data
 public class Administrador {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "administrador_sequence")
     private Long id;
     @Column
     private String nombres;
@@ -26,7 +26,7 @@ public class Administrador {
     @CreationTimestamp
     @Column( nullable = true)
     private Timestamp createdAtAdmi;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     public Cesfam cesfam;
     @OneToOne(optional = true)
     public Usuario usuario;

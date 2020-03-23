@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 /**
@@ -27,8 +31,19 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository userRepo;
     
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("byName")
     public Usuario indexName(@RequestParam("username") String username){
         return userRepo.findByusername(username);
+    }
+    
+    @PreAuthorize("hasRole('ROLE_PACIENTE')")
+    @PostMapping("changePassword")
+    public void saveUsuario(@RequestBody Usuario user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        this.userRepo.save(user);
     }
 }

@@ -5,19 +5,26 @@
  */
 package cl.ufro.dci.pmrteam.backendpmrapp.controllers;
 
-import cl.ufro.dci.pmrteam.backendpmrapp.Validars.RutValidator;
+import cl.ufro.dci.pmrteam.backendpmrapp.utils.RutValidator;
 import cl.ufro.dci.pmrteam.backendpmrapp.models.Cesfam;
 import cl.ufro.dci.pmrteam.backendpmrapp.models.HoraEspecialista;
 import cl.ufro.dci.pmrteam.backendpmrapp.models.Paciente;
+import cl.ufro.dci.pmrteam.backendpmrapp.models.Rol;
 import cl.ufro.dci.pmrteam.backendpmrapp.models.Usuario;
 import cl.ufro.dci.pmrteam.backendpmrapp.repositorys.CesfamRepository;
 import cl.ufro.dci.pmrteam.backendpmrapp.repositorys.PacienteRepository;
 import cl.ufro.dci.pmrteam.backendpmrapp.repositorys.UsuarioRepository;
+import cl.ufro.dci.pmrteam.backendpmrapp.services.MailService;
+import cl.ufro.dci.pmrteam.backendpmrapp.utils.EmailVerificador;
+import cl.ufro.dci.pmrteam.backendpmrapp.utils.PasswordGenerate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +38,6 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author ghuerta
  */
-
 @RepositoryRestController
 @RestController
 @RequestMapping("paciente")
@@ -46,38 +52,76 @@ public class PacienteController {
     @Autowired
     private UsuarioRepository usuarioRepo;
     
-    @GetMapping("byRun")
-    public Paciente indexByRun(@RequestParam("run") String run){
-        return RutValidator.validaRut(run) ? this.patientRepo.findByrun(run) : null ;
-    }
+    @Autowired
+    private MailService mailService;
     
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("byRun")
+    public Paciente indexByRun(@RequestParam("run") String run) {
+        return RutValidator.validaRut(run) ? this.patientRepo.findByrun(run) : null;
+    }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("byCesfam")
-    public List<Paciente> indexByCesfam(@RequestParam("id") Long id){
+    public List<Paciente> indexByCesfam(@RequestParam("id") Long id) {
         return this.patientRepo.findBycesfam(this.cesfamRepo.findById(id).get());
     }
     
-    @PutMapping("byUser")
-    public Paciente saveUser(@RequestParam("id") Long id, @RequestBody Usuario usuario){
-        Optional<Paciente> op = this.patientRepo.findById(id);
-        if(op.isPresent()) {
-            this.usuarioRepo.save(usuario);
-            Paciente pac = op.get();
-            pac.setUsuario(usuario);
-            return this.patientRepo.save(pac);
+
+//    @PreAuthorize("hasRole('ROLE_PACIENTE')")
+//    @PutMapping("addHoratoPaciente")
+//    public List<HoraEspecialista> addHora(@RequestParam("id") Long id, @RequestBody HoraEspecialista horaAsignada) {
+//        Optional<Paciente> opPaciente = patientRepo.findById(id);
+//        if (opPaciente.isPresent()) {
+//            Paciente pac = opPaciente.get();
+//            ArrayList<HoraEspecialista> listHora = (ArrayList<HoraEspecialista>) pac.getHistorialHoras();
+//            listHora.add(horaAsignada);
+//            pac.setHistorialHoras(listHora);
+//            return listHora;
+//        }
+//        return null;
+//    }
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping("sendPassword")
+    public boolean sendEmailPassword(@RequestBody JSONObject datos) throws Exception{
+        String rut = datos.getAsString("rut");
+        if(!RutValidator.validaRut(rut)){
+            throw new Exception("Formato de rut no valido");
         }
-        return null;
-    }
-    
-    @PutMapping("addHoratoPaciente")
-    public List<HoraEspecialista> addHora(@RequestParam("id") Long id, @RequestBody HoraEspecialista horaAsignada) {
-        Optional<Paciente> opPaciente = patientRepo.findById(id);
-        if (opPaciente.isPresent()) {
-            Paciente pac = opPaciente.get();
-            ArrayList<HoraEspecialista> listHora = (ArrayList<HoraEspecialista>)pac.getHistorialHoras();
-            listHora.add(horaAsignada);
-            pac.setHistorialHoras(listHora);
-            return listHora;
+        if(!EmailVerificador.verificar(datos.getAsString("email"))){
+            throw  new Exception("Email no valido");
         }
-        return null;
+        if (Optional.of(rut).isPresent()) {
+            Paciente pac = this.patientRepo.findByrun(rut);
+            if (Optional.of(pac).isPresent()) {
+                
+                String pass = PasswordGenerate.generatePassayPassword();
+                Optional<Usuario> d = Optional.ofNullable(pac.getUsuario());
+                if (d.isEmpty()) {
+                    Usuario usuario = new Usuario();
+                    usuario.setEmail(datos.getAsString("email"));
+                    usuario.setPassword(this.bCryptPasswordEncoder.encode(pass));
+                    usuario.setUsername(rut);
+                    usuario.setRol(Rol.ROLE_PACIENTE);
+                    pac.setUsuario(this.usuarioRepo.save(usuario));
+                    this.patientRepo.save(pac);
+                } else {
+                    Usuario p = pac.getUsuario();
+                    p.setEmail(datos.getAsString("email"));
+                    p.setPassword(this.bCryptPasswordEncoder.encode(pass));
+                    pac.setUsuario(this.usuarioRepo.save(p));
+                    this.patientRepo.save(pac);
+                }
+                
+                this.mailService.sendEmail(datos.getAsString("email"), "Envio de password", ""
+                        + "La password es: " + pass + "\n"
+                        + "Esta password tiene que ser cambiada en 3 minutos.\n"
+                        + "En caso responder este correo con los siguientes datos: rut, cesfam y celular ");
+                return true;
+            }
+        }
+        
+        return false;
     }
 }

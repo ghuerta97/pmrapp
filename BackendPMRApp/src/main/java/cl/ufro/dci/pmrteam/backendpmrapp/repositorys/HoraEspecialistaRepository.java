@@ -7,25 +7,28 @@ package cl.ufro.dci.pmrteam.backendpmrapp.repositorys;
 
 import cl.ufro.dci.pmrteam.backendpmrapp.models.Especialidad;
 import cl.ufro.dci.pmrteam.backendpmrapp.models.HoraEspecialista;
+import cl.ufro.dci.pmrteam.backendpmrapp.models.Paciente;
 import java.sql.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
  * @author ghuerta
  */
+@PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_PACIENTE')")
 @RepositoryRestResource(path = "hora", collectionResourceRel = "hours")
 public interface HoraEspecialistaRepository extends CrudRepository<HoraEspecialista, Long>{
     
     List<HoraEspecialista> findAllByespecialidad(Especialidad especialidad);
     
-    @Query(value = "SELECT * FROM hora_especialista WHERE hora_especialista.paciente_id = :pacienteid AND hora_especialista.fecha_consulta BETWEEN :start AND :end", nativeQuery = true)
-    List<HoraEspecialista> findBypacienteAndfechaConsultaBetween(@Param("pacienteid") Long id, @Param("start") Date start, @Param("end") Date end);
-    
-    List<HoraEspecialista> findByfechaConsultaBetween(Date start, Date end);
+    List<HoraEspecialista> findAllBypaciente(Paciente paciente);
+    @GetMapping("buscarhora")
+    List<HoraEspecialista> findAllByAsignadaAndRealizada(@RequestParam("asignada") boolean asignada, @RequestParam("realizada") boolean realizada);
 }

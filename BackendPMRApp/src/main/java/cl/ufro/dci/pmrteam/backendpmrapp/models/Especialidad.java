@@ -26,7 +26,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Data
 public class Especialidad {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "especialidad_sequence")
     private Long id;
     private String nombre;
     private String descripcion;
