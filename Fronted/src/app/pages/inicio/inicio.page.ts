@@ -69,13 +69,14 @@ export class InicioPage implements OnInit {
       this.loadingPresent();
       if (this.plataform.is('desktop')) {
         this.authService.login(this.user.rut.value, this.user.password.value)
-          .pipe(finalize(() => this.loadingController.dismiss({ message: 'Listo', spinner: 'ok' })))
+          .pipe(finalize(() => this.loadingController.dismiss()))
           .subscribe(response => {
             if (response.token) {
               this.authService.authenticated = true;
               this.router.navigateByUrl('principal');
             }
             localStorage.setItem('token_user', response.token);
+            return;
           }, error => {
             console.error(error);
           });
