@@ -9,6 +9,6 @@ export interface Paciente {
     cronico: boolean;
     createdAtPaciente: Date;
     usuario: Usuario;
-    cesfam: Cesfam;
+    cesfam: Cesfam  ;
 
 }

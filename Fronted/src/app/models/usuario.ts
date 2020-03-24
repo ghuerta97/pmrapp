@@ -1,5 +1,11 @@
+import { Rol } from './rol';
+
 export class Usuario {
     id: number;
-    name: string;
+    username: string;
+    email: string;
+    password: string;
+    rol: Rol;
     createdAtUser: Date;
+    token ?: string;
 }

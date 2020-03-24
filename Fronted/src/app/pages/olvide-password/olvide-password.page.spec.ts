@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { LoadingComponent } from './loading.component';
+import { OlvidePasswordPage } from './olvide-password.page';
 
-describe('LoadingComponent', () => {
-  let component: LoadingComponent;
-  let fixture: ComponentFixture<LoadingComponent>;
+describe('OlvidePasswordPage', () => {
+  let component: OlvidePasswordPage;
+  let fixture: ComponentFixture<OlvidePasswordPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoadingComponent ],
+      declarations: [ OlvidePasswordPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LoadingComponent);
+    fixture = TestBed.createComponent(OlvidePasswordPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

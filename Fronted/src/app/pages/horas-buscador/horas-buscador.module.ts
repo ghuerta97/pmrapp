@@ -9,6 +9,8 @@ import { HorasBuscadorPageRoutingModule } from './horas-buscador-routing.module'
 import { HorasBuscadorPage } from './horas-buscador.page';
 import { BuscadorComponent } from '../../components/buscador/buscador.component';
 import { AngularMaterialModule } from 'src/app/angularmaterial.module';
+import { IonicStorageModule } from '@ionic/storage';
+import { DialogConfirmationComponent } from './DialogConfirmation/dialog-confirmation.component';
 
 @NgModule({
   imports: [
@@ -16,11 +18,17 @@ import { AngularMaterialModule } from 'src/app/angularmaterial.module';
     FormsModule,
     IonicModule,
     HorasBuscadorPageRoutingModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    IonicStorageModule.forRoot()
   ],
-  declarations: [HorasBuscadorPage, BuscadorComponent]
-  , entryComponents: [
-    BuscadorComponent
+  declarations: [
+    HorasBuscadorPage, 
+    BuscadorComponent, 
+    DialogConfirmationComponent
+  ], 
+  entryComponents: [
+    BuscadorComponent,
+    DialogConfirmationComponent,
   ]
 })
 export class HorasBuscadorPageModule {}

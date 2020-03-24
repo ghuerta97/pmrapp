@@ -20,11 +20,11 @@ export class BuscadorComponent implements OnInit {
   especialidades = [] as Especialidad[];
 
   horasFounds = [] as HoraEspecialista[];
-  
+
   constructor(private horaService: HorasService, private loadingController: LoadingController) { }
 
-  ngOnInit() { 
-    this.horaService.getEspecialidades().subscribe( result  => {
+  ngOnInit() {
+    this.horaService.getEspecialidades().subscribe(result => {
       this.especialidades = result._embedded.especialidad;
     }, error => {
       console.error(error);
@@ -32,25 +32,32 @@ export class BuscadorComponent implements OnInit {
   }
 
   async buscarHoras(search: any) {
+    this.horasFounds = [];
     const loading = await this.loadingController.create({
       message: 'Please wait...',
       translucent: true,
       mode: 'md',
     });
     await loading.present();
-    if(search.length > 0) {
-      for(let i = 0; i < search.length ; i++){
-        this.horaService.getHorasEspecilistas(search[i].value.nombre).pipe(finalize(() => loading.dismiss()))
-      .subscribe(result => {
-        if(result) {
-          this.horasFounds.concat(result);
-        }
-      }, error => {
-
-      })
-      }
-      this.result.emit(this.horasFounds);
+    if (search.length > 0) {
+      for (let i = 0; i < search.length ; i++) {
+          this.horaService.getHorasEspecilistas(search[i].value.nombre).pipe(finalize(() => loading.dismiss()))
+            .subscribe(result => {
+              if (result) {
+                
+                this.horasFounds = this.horasFounds.concat(result);
+                console.log(this.horasFounds)
+              }
+            }, error => {
+              loading.dismiss();
+            })
+            
+      } 
     }
+    setTimeout(() => {
+      this.horasFounds = this.horasFounds.filter(hora => hora.asignada === false);
+      this.result.emit(this.horasFounds);
+    }, 1000)
   }
 
 }

@@ -9,6 +9,9 @@ export class HoraEspecialista {
     id: number;
     horaConsulta: Time;
     fechaConsulta: Date;
+    realizada: boolean;
+    asignada: boolean;
+    observacion: string;
     ingresada: Date;
     cesfam: Cesfam;
     profesional: Medico;

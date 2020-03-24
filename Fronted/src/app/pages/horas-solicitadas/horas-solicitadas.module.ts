@@ -6,8 +6,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { HorasSolicitadasPageRoutingModule } from './horas-solicitadas-routing.module';
 
-import { HorasSolicitadasPage } from './horas-solicitadas.page';
+import { HorasSolicitadasPage, DialogCancelar } from './horas-solicitadas.page';
 import { AngularMaterialModule } from 'src/app/angularmaterial.module';
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   imports: [
@@ -15,8 +16,15 @@ import { AngularMaterialModule } from 'src/app/angularmaterial.module';
     FormsModule,
     IonicModule,
     HorasSolicitadasPageRoutingModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    IonicStorageModule.forRoot()
   ],
-  declarations: [HorasSolicitadasPage]
+  declarations: [
+    HorasSolicitadasPage,
+    DialogCancelar
+  ],
+  entryComponents: [
+    DialogCancelar
+  ]
 })
 export class HorasSolicitadasPageModule {}

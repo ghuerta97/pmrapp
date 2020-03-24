@@ -51,6 +51,8 @@ public class TokenProvider {
     }
 
     public static UsernamePasswordAuthenticationToken getAuthentication(String token, UserDetails user) {
+        System.out.println(token);
+        System.out.println(user.getUsername());
         final JwtParser jwtParser = Jwts.parser().setSigningKey(Constrants.SUPER_SECRET_KEY);
 
         final Jws<Claims> claimsJws = jwtParser.parseClaimsJws(token);

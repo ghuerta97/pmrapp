@@ -57,7 +57,7 @@ public class PacienteController {
     
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_PACIENTE') ")
     @GetMapping("byRun")
     public Paciente indexByRun(@RequestParam("run") String run) {
         return RutValidator.validaRut(run) ? this.patientRepo.findByrun(run) : null;
@@ -94,7 +94,7 @@ public class PacienteController {
         }
         if (Optional.of(rut).isPresent()) {
             Paciente pac = this.patientRepo.findByrun(rut);
-            if (Optional.of(pac).isPresent()) {
+            if (Optional.ofNullable(pac).isPresent()) {
                 
                 String pass = PasswordGenerate.generatePassayPassword();
                 Optional<Usuario> d = Optional.ofNullable(pac.getUsuario());
@@ -108,16 +108,21 @@ public class PacienteController {
                     this.patientRepo.save(pac);
                 } else {
                     Usuario p = pac.getUsuario();
-                    p.setEmail(datos.getAsString("email"));
-                    p.setPassword(this.bCryptPasswordEncoder.encode(pass));
-                    pac.setUsuario(this.usuarioRepo.save(p));
-                    this.patientRepo.save(pac);
+                    Optional<Usuario> user =  Optional.ofNullable(this.usuarioRepo.findByemail(datos.getAsString("email")));
+                    if(user.isEmpty() || p.getEmail().equalsIgnoreCase(datos.getAsString("email"))) {
+                        p.setEmail(datos.getAsString("email"));
+                        p.setPassword(this.bCryptPasswordEncoder.encode(pass));
+                        pac.setUsuario(this.usuarioRepo.save(p));
+                        this.patientRepo.save(pac);
+                    }else {
+                        throw new Exception("Email existe en otro usuario");
+                    }
+                    
+                    
                 }
                 
-                this.mailService.sendEmail(datos.getAsString("email"), "Envio de password", ""
-                        + "La password es: " + pass + "\n"
-                        + "Esta password tiene que ser cambiada en 3 minutos.\n"
-                        + "En caso responder este correo con los siguientes datos: rut, cesfam y celular ");
+                this.mailService.sendEmail(datos.getAsString("email"), "Envio de password para pmrapp", ""
+                        + "La password es: " + pass) ;
                 return true;
             }
         }

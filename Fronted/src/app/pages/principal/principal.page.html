@@ -8,9 +8,25 @@
           <mat-icon>close</mat-icon>
         </button>
         </mat-toolbar> -->
+        <mat-list>
+          <mat-list-item *ngIf="paciente" >
+            <img matListAvatar src="../../../assets/img/background-2.jpg" alt="...">
+            <h3 matLine> {{paciente.nombres}} {{paciente.apellidos}} </h3>
+            <p matLine>
+              <span> {{paciente.cesfam.nombre}} </span>
+            </p>
+          </mat-list-item>
+        </mat-list>
+        <mat-divider></mat-divider>
     <mat-nav-list>
       <mat-list-item [routerLink]="['/','principal',item.path]" (click)="snav.toggle()" *ngFor="let item of menu">
-              {{ item.title }}
+        <mat-icon matListIcon>{{item.icon}}</mat-icon>      
+        {{ item.title }} 
+      </mat-list-item>
+
+      <mat-list-item [routerLink]="['/']" (click)="cerrarSesion()">
+        <mat-icon matListIcon>settings_power</mat-icon>
+        Cerrar Sesion
       </mat-list-item>
     </mat-nav-list>
   </mat-sidenav >

@@ -1,0 +1,8 @@
+<mat-form-field>
+    <mat-label>Optional</mat-label>
+    <textarea [(ngModel)]="comment" matInput placeholder="Ingrese motivo de consulta"></textarea>
+</mat-form-field>
+<div mat-dialog-actions>
+    <button mat-button color="primary" (click)="onSubmit()">Confirmar</button>
+    <button mat-button color="danger"  (click)="onNoClick()">Cancelar</button>
+</div>

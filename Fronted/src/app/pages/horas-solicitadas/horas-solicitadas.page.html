@@ -1,14 +1,15 @@
 <div class="container">
-  <mat-card>
+  <mat-card class="mt-3" *ngFor="let hora of horaSolicitadas">
     <mat-card-header>
-      <mat-card-title>Especialidad</mat-card-title>
-    <mat-card-subtitle>Hora y Fecha</mat-card-subtitle>
+      <mat-card-title>{{hora.especialidad.nombre}}</mat-card-title>
+    <mat-card-subtitle>{{hora.fechaConsulta}} {{hora.horaConsulta}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      Observaciones
+      Dr. {{ hora.profesional.nombres }} {{ hora.profesional.apellidos }}
+    {{ hora.observacion }}
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button color="danger" >Cancelar</button>
+      <button mat-button color="danger" (click)="openDialogCancelar(hora)" >Cancelar</button>
       <button mat-button color="primary" >Editar</button>
     </mat-card-actions>
   </mat-card>

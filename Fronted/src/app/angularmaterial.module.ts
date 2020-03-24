@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MatInputModule, MatFormFieldModule, MatButtonModule, MatSidenavModule, MatIconModule, MatToolbarModule, MatListModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatDividerModule, MatTabsModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatButtonModule, MatSidenavModule, MatIconModule, MatToolbarModule, MatListModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatDividerModule, MatTabsModule, MatDialogModule, MatProgressSpinnerModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 @NgModule({
     imports : [
@@ -18,7 +18,9 @@ import { CommonModule } from '@angular/common';
         MatDatepickerModule,
         MatNativeDateModule,
         MatDividerModule,
-        MatTabsModule 
+        MatTabsModule,
+        MatDialogModule,
+        MatProgressSpinnerModule
     ],
     exports: [
         CommonModule,
@@ -36,7 +38,10 @@ import { CommonModule } from '@angular/common';
         MatDatepickerModule,
         MatNativeDateModule,
         MatDividerModule,
-        MatTabsModule
+        MatTabsModule,
+        MatDialogModule,
+        MatProgressSpinnerModule,
+        MatDividerModule
     ], 
     providers : [
         MatDatepickerModule,

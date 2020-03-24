@@ -20,10 +20,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @RepositoryRestResource(path = "paciente",collectionResourceRel = "patients")
 public interface PacienteRepository extends CrudRepository<Paciente, Long>{
-    @PreAuthorize("hasRole('ROLE_PACIENTE')")
     Paciente findByrun(String run);
     @Override
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     Paciente save(Paciente paciente);
     
     List<Paciente> findBycesfam(Cesfam cesfam);
