@@ -57,7 +57,7 @@ public class PacienteController {
     
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    @PreAuthorize("hasRole('ROLE_ADMIN') OR hasRole('ROLE_PACIENTE') ")
+
     @GetMapping("byRun")
     public Paciente indexByRun(@RequestParam("run") String run) {
         return RutValidator.validaRut(run) ? this.patientRepo.findByrun(run) : null;
