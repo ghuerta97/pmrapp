@@ -14,28 +14,28 @@ import { finalize, filter } from 'rxjs/operators';
 })
 export class HorasBuscadorPage implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['hora', 'fecha', 'medico', 'seleccionar'];
+  arr: HoraEspecialista[] = [];
   dataSource: MatTableDataSource<HoraEspecialista> = new MatTableDataSource<HoraEspecialista>();
   public buscando: boolean = false;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator ;
 
   constructor(
-    private storage: Storage, 
-    private pacienteService: PacienteService, 
     private horaService: HorasService,
-    private dialog: MatDialog) {}
+    private dialog: MatDialog) { }
 
   ngOnInit() {
+    
     this.buscando = true;
     this.horaService.getHorasEspecilistas('medico general')
     .pipe( finalize(()=> {this.buscando = false }))
     .subscribe(data=> {
-      this.dataSource = new MatTableDataSource<HoraEspecialista>(data);
+      this.arr = data;
+      this.dataSource = new MatTableDataSource<HoraEspecialista>(this.arr);
       this.dataSource.paginator = this.paginator;
     }, error=> {
 
     })
-      this.dataSource.paginator = this.paginator;
   }
   ngAfterViewInit(){
     

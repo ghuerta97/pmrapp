@@ -3,9 +3,10 @@ app-buscador.row {
    }
 table {
     width: 80%;
+    margin-left: 10%;
 }
 
-.paginator {
-    width: 82%;
-    margin-left: 9%;
+mat-paginator {
+    width: 80%;
+    margin-left: 10%;
 }

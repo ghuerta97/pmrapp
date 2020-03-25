@@ -44,7 +44,7 @@ public class HorasController {
     private PacienteRepository pacienteRepository;
     
     @GetMapping("byEspecialidad")
-    public List<HoraEspecialista> indexAll (@RequestParam("nombre") String especialidad, Principal user) {
+    public List<HoraEspecialista> indexAll (@RequestParam("nombre") String especialidad) {
         Optional<Especialidad> opEsp = this.especialidadRepository.findBynombre(especialidad);
         if(opEsp.isPresent()) {
             return this.horasRepository.findAllByespecialidad(opEsp.get());

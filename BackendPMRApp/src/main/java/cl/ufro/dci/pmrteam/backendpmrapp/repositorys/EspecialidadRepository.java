@@ -16,7 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
  *
  * @author root
  */
-@PreAuthorize("hasRole('ROLE_ADMIN')")
+
 @RepositoryRestResource(path = "especialidad", collectionResourceRel = "especialidad")
 public interface EspecialidadRepository extends CrudRepository<Especialidad, Long>{
 
