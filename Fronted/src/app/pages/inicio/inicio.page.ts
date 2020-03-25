@@ -6,7 +6,7 @@ import $ from 'jquery';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { Paciente } from 'src/app/models/paciente';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, TOKEN_NAME } from 'src/app/services/auth.service';
 import { finalize } from 'rxjs/operators';
 import { AuthMovilService } from 'src/app/services/authmovil.service';
 
@@ -75,7 +75,7 @@ export class InicioPage implements OnInit {
               this.authService.authenticated = true;
               this.router.navigateByUrl('principal');
             }
-            localStorage.setItem('token_user', response.token);
+            localStorage.setItem(TOKEN_NAME, response.token);
             return;
           }, error => {
             console.error(error);
@@ -88,7 +88,7 @@ export class InicioPage implements OnInit {
               this.authMovilService.currentUserSubject.next(data.data.username);
               this.router.navigateByUrl('principal')
             }
-            localStorage.setItem('token_user', data.data.token);
+            localStorage.setItem(TOKEN_NAME, data.data.token);
           }, error => {
             console.error(error);
           })

@@ -10,17 +10,12 @@ import { map } from 'rxjs/operators';
 
 export const TOKEN_NAME: string = 'token_user';
 
-export const HTTP_OPTIONS = {headers: new HttpHeaders({
-  'Content-Type':  'application/json',
-  'Authorization': 'Bearer '+localStorage.getItem('token_user')
-})}
-
 @Injectable( {
     providedIn: 'root'
 })
 export class AuthService {
 
-    private httpOptions = {
+    public httpOptions = {
         headers: new HttpHeaders({
           'Content-Type':  'application/json'
         })
@@ -28,8 +23,10 @@ export class AuthService {
 
     private _autenticated = false;
     public get authenticated(): boolean { return this._autenticated};
+    
+    public get headers(): any { return this.httpOptions;}
 
-    private currentUserSubject = new BehaviorSubject<any>(null); 
+    public currentUserSubject = new BehaviorSubject<any>(null); 
 
      constructor(
          private http: HttpClient
@@ -45,6 +42,10 @@ export class AuthService {
         return this.http.post<any>(environment.api+'login',{'username': username, 'password': password},this.httpOptions )
         .pipe(map(data => {
           localStorage.setItem(TOKEN_NAME,data.token);
+          this.httpOptions.headers = new HttpHeaders({
+            'Content-Type':  'application/json',
+            'Authorization': 'Bearer '+localStorage.getItem(TOKEN_NAME)
+          })
           this.currentUserSubject.next(data.username); // <-- pump the value in here
 
         return data;

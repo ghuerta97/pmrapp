@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: 'https://gentle-escarpment-84662.herokuapp.com/'
+  api: 'https://pmrappteam.herokuapp.com/'
 };
 
 /*

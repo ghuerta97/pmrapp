@@ -5,7 +5,8 @@ import { AuthService, TOKEN_NAME } from 'src/app/services/auth.service';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { Paciente } from 'src/app/models/paciente';
 import { Cesfam } from 'src/app/models/cesfam';
-
+import * as jwt_decode from 'jwt-decode';
+import { HttpHeaders } from '@angular/common/http';
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.page.html',
@@ -33,6 +34,12 @@ export class PrincipalPage implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnInit() {
+    var decoded = jwt_decode(localStorage.getItem(TOKEN_NAME));
+    this.authService.currentUserSubject.next(decoded.sub);
+    this.authService.httpOptions.headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem(TOKEN_NAME)
+    })
     this.toolbarComponent.sidenav = {
       action: function (sidenav) {
         sidenav.opened = !sidenav.opened;
@@ -51,7 +58,7 @@ export class PrincipalPage implements OnInit, AfterViewInit, OnChanges {
 
   ngAfterViewInit() {
   }
-  
+
   ngOnChanges(changes: SimpleChanges): void {
 
   }
