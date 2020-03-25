@@ -43,7 +43,6 @@ public class HorasController {
     @Autowired
     private PacienteRepository pacienteRepository;
     
-    @PreAuthorize("hasRole('ROLE_PACIENTE') OR hasRole('ROLE_ADMIN')")
     @GetMapping("byEspecialidad")
     public List<HoraEspecialista> indexAll (@RequestParam("nombre") String especialidad, Principal user) {
         Optional<Especialidad> opEsp = this.especialidadRepository.findBynombre(especialidad);

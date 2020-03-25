@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
 import { ToolbarComponent } from 'src/app/components/toolbar/toolbar.component';
-import { MatSidenav } from '@angular/material';
 import { AuthService, TOKEN_NAME } from 'src/app/services/auth.service';
 import { PacienteService } from 'src/app/services/paciente.service';
 import { Paciente } from 'src/app/models/paciente';
