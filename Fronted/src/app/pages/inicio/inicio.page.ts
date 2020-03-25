@@ -1,10 +1,7 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Storage } from '@ionic/storage';
 import { LoadingController, Platform } from '@ionic/angular';
 import $ from 'jquery';
-import { PacienteService } from 'src/app/services/paciente.service';
-import { Paciente } from 'src/app/models/paciente';
 import { Router } from '@angular/router';
 import { AuthService, TOKEN_NAME } from 'src/app/services/auth.service';
 import { finalize } from 'rxjs/operators';
@@ -49,7 +46,8 @@ export class InicioPage implements OnInit {
     this.isLoading = true;
     return await this.loadingController.create({
       message: 'Cargando ...',
-      spinner: 'circles'
+      spinner: 'circles',
+      duration: 3000
     }).then(a => {
       a.present().then(() => {
         console.log('loading presented');
