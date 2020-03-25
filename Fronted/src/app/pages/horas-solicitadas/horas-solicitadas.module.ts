@@ -10,6 +10,7 @@ import { HorasSolicitadasPage, DialogCancelar } from './horas-solicitadas.page';
 import { AngularMaterialModule } from 'src/app/angularmaterial.module';
 import { IonicStorageModule } from '@ionic/storage';
 
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 @NgModule({
   imports: [
     CommonModule,
@@ -17,7 +18,8 @@ import { IonicStorageModule } from '@ionic/storage';
     IonicModule,
     HorasSolicitadasPageRoutingModule,
     AngularMaterialModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    InfiniteScrollModule
   ],
   declarations: [
     HorasSolicitadasPage,

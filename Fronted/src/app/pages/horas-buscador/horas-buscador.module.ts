@@ -11,7 +11,7 @@ import { BuscadorComponent } from '../../components/buscador/buscador.component'
 import { AngularMaterialModule } from 'src/app/angularmaterial.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { DialogConfirmationComponent } from './DialogConfirmation/dialog-confirmation.component';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,7 +19,8 @@ import { DialogConfirmationComponent } from './DialogConfirmation/dialog-confirm
     IonicModule,
     HorasBuscadorPageRoutingModule,
     AngularMaterialModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    NgbModule
   ],
   declarations: [
     HorasBuscadorPage, 

@@ -15,7 +15,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  *
  * @author ghuerta
  */
-@EnableScheduling
 @SpringBootApplication
 public class Application {
 //    @GenericGenerator(

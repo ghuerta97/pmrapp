@@ -1,36 +1,72 @@
 <div *ngIf="buscando">
-  <mat-spinner ></mat-spinner>
+  <mat-spinner></mat-spinner>
 </div>
-<div *ngIf="!buscando"  class="" >
-  <table    mat-table [dataSource]="dataSource">
+<div *ngIf="!buscando">
+  <table id="dtVerticalScrollExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+    <thead>
+      <tr>
+        <th class="th-sm">Fecha
+        </th>
+        <th class="th-sm">Hora
+        </th>
+        <th class="th-sm">Medico
+        </th>
+        <th class="th-sm">
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let hora of horas">
+        <td>{{ hora.fechaConsulta}}</td>
+        <td>{{ hora.horaConsulta }}</td>
+        <td>Dr. {{hora.profesional.nombres}} <br> {{hora.profesional.apellidos}}</td>
+        <td>
+          <button mat-button (click)="asignarHora(hora)" color="primary">Seleccionar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>  
+  <div class="d-flex justify-content-between p-2">
+    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+    </ngb-pagination>
+  
+    <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
+      <option [ngValue]="2">2 items per page</option>
+      <option [ngValue]="4">4 items per page</option>
+      <option [ngValue]="6">6 items per page</option>
+    </select>
+  </div>
 
-    <!-- Name Column -->
-    <ng-container matColumnDef="hora">
-      <th mat-header-cell *matHeaderCellDef> Hora </th>
-      <td mat-cell *matCellDef="let element"> {{element.horaConsulta}} </td>
-    </ng-container>
 
-    <!-- Weight Column -->
-    <ng-container matColumnDef="fecha">
-      <th mat-header-cell *matHeaderCellDef> Fecha </th>
-      <td mat-cell *matCellDef="let element"> {{element.fechaConsulta}} </td>
-    </ng-container>
+    <!-- <table mat-table [dataSource]="dataSource">
 
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="medico">
-      <th mat-header-cell *matHeaderCellDef> Medico </th>
-      <td mat-cell *matCellDef="let element"> Dr. {{element.profesional.nombres }} <br> {{ element.profesional.apellidos}} </td>
-    </ng-container>
+      
+      <ng-container matColumnDef="hora">
+        <th mat-header-cell *matHeaderCellDef> Hora </th>
+        <td mat-cell *matCellDef="let element"> {{element.horaConsulta}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="seleccionar">
-      <th mat-header-cell *matHeaderCellDef>  </th>
-      <td mat-cell *matCellDef="let element"> 
-        <button mat-raised-button (click)="asignarHora(element)" color="primary" >Seleccionar</button>   
-      </td>
-    </ng-container>
+     
+      <ng-container matColumnDef="fecha">
+        <th mat-header-cell *matHeaderCellDef> Fecha </th>
+        <td mat-cell *matCellDef="let element"> {{element.fechaConsulta}} </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-  <mat-paginator class="paginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    
+      <ng-container matColumnDef="medico">
+        <th mat-header-cell *matHeaderCellDef> Medico </th>
+        <td mat-cell *matCellDef="let element"> Dr. {{element.profesional.nombres }} <br>
+          {{ element.profesional.apellidos}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="seleccionar">
+        <th mat-header-cell *matHeaderCellDef> </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-raised-button (click)="asignarHora(element)" color="primary">Seleccionar</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table> -->
 </div>

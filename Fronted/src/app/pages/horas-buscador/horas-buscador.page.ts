@@ -1,18 +1,16 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HoraEspecialista } from 'src/app/models/horaespecialista';
-import { MatPaginator, MatTableDataSource, MatPaginatorIntl, MatDialog } from '@angular/material';
-import { Storage } from '@ionic/storage';
-import { PacienteService } from 'src/app/services/paciente.service';
-import { Paciente } from 'src/app/models/paciente';
+import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { HorasService } from 'src/app/services/horas.service';
 import { DialogConfirmationComponent } from './DialogConfirmation/dialog-confirmation.component';
-import { finalize, filter } from 'rxjs/operators';
+import { finalize} from 'rxjs/operators';
+import $ from 'jquery';
 @Component({
   selector: 'app-horas-buscador',
   templateUrl: './horas-buscador.page.html',
   styleUrls: ['./horas-buscador.page.scss'],
 })
-export class HorasBuscadorPage implements OnInit, AfterViewInit {
+export class HorasBuscadorPage implements OnInit {
   displayedColumns: string[] = ['hora', 'fecha', 'medico', 'seleccionar'];
   arr: HoraEspecialista[] = [];
   dataSource: MatTableDataSource<HoraEspecialista> = new MatTableDataSource<HoraEspecialista>();
@@ -20,33 +18,39 @@ export class HorasBuscadorPage implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator ;
 
+  page = 1;
+  pageSize = 4;
+  collectionSize = 0;
+
+  get horas(): HoraEspecialista[] {
+    return this.arr
+      .map((country, i) => ({id: i + 1, ...country}))
+      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+  }
+
+  set horas(horas:HoraEspecialista[]){
+    this.arr = horas;
+  }
+
   constructor(
     private horaService: HorasService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog) {
+     }
 
   ngOnInit() {
+
     
     this.buscando = true;
     this.horaService.getHorasEspecilistas('medico general')
     .pipe( finalize(()=> {this.buscando = false }))
     .subscribe(data=> {
-      this.arr = data;
+      this.horas = data;
+      this.collectionSize = this.horas.length;
       this.dataSource = new MatTableDataSource<HoraEspecialista>(this.arr);
-      this.dataSource.paginator = this.paginator;
     }, error=> {
-
+      console.error(error);
     })
-  }
-  ngAfterViewInit(){
     
-  }
-
-  resultado(result: HoraEspecialista[]) {
-    this.dataSource = null;
-      this.buscando = true;
-      this.dataSource = new MatTableDataSource<HoraEspecialista>(result);
-
-    this.ngOnInit();
   }
 
   asignarHora(element) {
@@ -58,6 +62,8 @@ export class HorasBuscadorPage implements OnInit, AfterViewInit {
     dialogElem.afterClosed().subscribe(result => {
       if(result.update) {
         this.ngOnInit();
+      }else if(result.null){
+        alert('Tiene una hora asignada en esa fecha');
       }
     })
   }

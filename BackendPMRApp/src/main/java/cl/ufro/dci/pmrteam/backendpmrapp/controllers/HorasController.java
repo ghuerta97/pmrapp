@@ -12,6 +12,8 @@ import cl.ufro.dci.pmrteam.backendpmrapp.repositorys.EspecialidadRepository;
 import cl.ufro.dci.pmrteam.backendpmrapp.repositorys.HoraEspecialistaRepository;
 import cl.ufro.dci.pmrteam.backendpmrapp.repositorys.PacienteRepository;
 import java.security.Principal;
+import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import net.minidev.json.JSONObject;
 
 /**
  *
@@ -47,7 +50,7 @@ public class HorasController {
     public List<HoraEspecialista> indexAll (@RequestParam("nombre") String especialidad) {
         Optional<Especialidad> opEsp = this.especialidadRepository.findBynombre(especialidad);
         if(opEsp.isPresent()) {
-            return this.horasRepository.findAllByespecialidad(opEsp.get());
+            return this.horasRepository.findAllByespecialidadAndAsignada(opEsp.get(), false);
         }
         return null;
     }
@@ -63,14 +66,19 @@ public class HorasController {
     }
     @PreAuthorize("hasRole('ROLE_PACIENTE')")
     @PostMapping(value= "toPaciente")
-    public HoraEspecialista asignarPaciente(@RequestParam("id") Long id, @RequestBody Paciente paciente, Principal user ) {
+    public HoraEspecialista asignarPaciente(@RequestParam("id") Long id, @RequestBody JSONObject paciente, Principal user ) {
 
         Optional<HoraEspecialista> opHora = this.horasRepository.findById(id);
-        Optional<Paciente> opPaciente = Optional.of(this.pacienteRepository.findByrun(paciente.getRun()));
+        Optional<Paciente> opPaciente = Optional.of(this.pacienteRepository.findByrun(paciente.getAsString("run")));
+        Optional<List<HoraEspecialista>> oplisthora = Optional.of(this.horasRepository.findAllBypacienteAndFechaConsulta(opPaciente.get(),opHora.get().getFechaConsulta()));
+        if(!oplisthora.get().isEmpty()) {
+            return null;
+        }
         if (opHora.isPresent() && opPaciente.isPresent()  && opPaciente.get().getRun().equalsIgnoreCase(user.getName())) {
             HoraEspecialista horaEspecialista = opHora.get();
             horaEspecialista.setPaciente( opPaciente.get());
             horaEspecialista.setAsignada(true);
+            horaEspecialista.setObservacion(paciente.getAsString("comment"));
             this.horasRepository.save(horaEspecialista);
             return horaEspecialista;
         }
@@ -88,5 +96,18 @@ public class HorasController {
           }
         }
         return false;
+    }
+    
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping(value="realizada")
+    public void realizada(@RequestParam("id_hora") Long id) throws Exception {
+        Optional<HoraEspecialista> op = this.horasRepository.findById(id);
+        if(op.isPresent()){
+            HoraEspecialista hora = op.get();
+            hora.setRealizada(true);
+            this.horasRepository.save(hora);
+        }else {
+            throw  new Exception("No existe tal hora");
+        }
     }
 }

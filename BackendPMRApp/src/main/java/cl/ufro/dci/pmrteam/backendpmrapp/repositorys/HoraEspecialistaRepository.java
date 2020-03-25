@@ -26,9 +26,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RepositoryRestResource(path = "hora", collectionResourceRel = "hours")
 public interface HoraEspecialistaRepository extends CrudRepository<HoraEspecialista, Long>{
     
-    List<HoraEspecialista> findAllByespecialidad(Especialidad especialidad);
+    List<HoraEspecialista> findAllByespecialidadAndAsignada(Especialidad especialidad, boolean asignada);
+    
+    List<HoraEspecialista> findAllBypacienteAndRealizada(Paciente paciente, boolean realizada);
     
     List<HoraEspecialista> findAllBypaciente(Paciente paciente);
-    @GetMapping("buscarhora")
-    List<HoraEspecialista> findAllByAsignadaAndRealizada(@RequestParam("asignada") boolean asignada, @RequestParam("realizada") boolean realizada);
+
+    List<HoraEspecialista> findAllBypacienteAndFechaConsulta(Paciente pac, Date date);
 }

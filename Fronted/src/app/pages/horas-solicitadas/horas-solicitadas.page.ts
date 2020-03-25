@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { HorasService } from '../../services/horas.service';
 import { HoraEspecialista } from 'src/app/models/horaespecialista';
 import { MatDialog, MatDialogRef } from '@angular/material';
@@ -14,18 +14,18 @@ export class HorasSolicitadasPage implements OnInit {
 
   horaSolicitadas = [] as HoraEspecialista[];
   constructor(private horaService: HorasService,
-              private dialog: MatDialog,
-              private authService: AuthService,
-              private router: Router) { }
+    private dialog: MatDialog,
+    private router: Router) { 
+    }
 
   ngOnInit() {
     var decoded = jwt_decode(localStorage.getItem(TOKEN_NAME));
-    if(decoded.sub){
+    if (decoded.sub) {
       this.horaService.getHorasByPacienteRut(decoded.sub).subscribe(result => {
         this.horaSolicitadas = result;
         console.log(this.horaSolicitadas)
       })
-    }else {
+    } else {
       this.router.navigateByUrl('principal');
     }
   }
@@ -35,16 +35,16 @@ export class HorasSolicitadasPage implements OnInit {
 
     });
     dia.beforeClosed().subscribe(
-      data=> {
-        if( data.cancelar ){
+      data => {
+        if (data.cancelar) {
           hora.asignada = false;
           hora.paciente = null;
           this.horaService.cancelarHoraMedica(hora)
-          .subscribe(data=> {
-            this.ngOnInit();
-          }, error=> {
-            console.error(error);
-          })
+            .subscribe(data => {
+              this.ngOnInit();
+            }, error => {
+              console.error(error);
+            })
         }
       }
     )
@@ -53,12 +53,12 @@ export class HorasSolicitadasPage implements OnInit {
 
 @Component({
   selector: 'dialog-cancelar',
-  template: '<div mat-dialog-content> ¿Desea cancelar?</div> <div mat-dialog-actions > <button mat-button (click)="cancelar()" >Si </button> <button mat-button >Cancelar </button>   </div>'
+  template: '<div mat-dialog-content> ¿Desea cancelar?</div> <div mat-dialog-actions > <button mat-button (click)="cancelar()" >Si </button> <button mat-button (click)="close()" >No </button>   </div>'
 })
 export class DialogCancelar {
- constructor(public dialogRef: MatDialogRef<DialogCancelar>) {}
+  constructor(public dialogRef: MatDialogRef<DialogCancelar>) { }
 
- close() {this.dialogRef.close({cancelar: false});}
+  close() { this.dialogRef.close({ cancelar: false }); }
 
- cancelar() { this.dialogRef.close({cancelar: true}) }
+  cancelar() { this.dialogRef.close({ cancelar: true }) }
 }

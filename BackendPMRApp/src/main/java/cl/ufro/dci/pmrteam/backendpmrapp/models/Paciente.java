@@ -24,6 +24,7 @@ public class Paciente {
     private Long id;
     private String nombres;
     private String apellidos;
+    @Column(unique = true, nullable = false)
     private String run;
     private String direccion;
     private boolean cronico;

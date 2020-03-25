@@ -36,9 +36,9 @@ export class HorasService implements OnInit {
     return this.http.get<any>(environment.api+'api/especialidad',this.authService.httpOptions);
   }
 
-  asignarHoratoPaciente(hora: HoraEspecialista, paciente_rut: string) {
+  asignarHoratoPaciente(hora: HoraEspecialista, paciente_rut: string, comment: string) {
    // console.log(this.httpOptions)
-    return this.http.post(environment.api+'api/hora/toPaciente?id='+hora.id,{'run':paciente_rut},this.authService.httpOptions);
+    return this.http.post(environment.api+'api/hora/toPaciente?id='+hora.id,{'run':paciente_rut, 'comment': comment},this.authService.httpOptions);
   }
 
   getHorasByPacienteRut(rut: string): Observable<HoraEspecialista[]> {

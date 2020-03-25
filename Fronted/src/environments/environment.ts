@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  api: 'https://pmrappteam.herokuapp.com/'
-};
+  api: 'http://localhost:8080/'
+}
 
 /*
  * For easier debugging in development mode, you can import the following file

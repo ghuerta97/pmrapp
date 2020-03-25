@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MatInputModule, MatFormFieldModule, MatButtonModule, MatSidenavModule, MatIconModule, MatToolbarModule, MatListModule, MatTableModule, MatPaginatorModule, MatSelectModule, MatCardModule, MatDatepickerModule, MatNativeDateModule, MatDividerModule, MatTabsModule, MatDialogModule, MatProgressSpinnerModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 @NgModule({
     imports : [
         CommonModule,
@@ -20,7 +21,8 @@ import { CommonModule } from '@angular/common';
         MatDividerModule,
         MatTabsModule,
         MatDialogModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        ScrollingModule
     ],
     exports: [
         CommonModule,
@@ -41,7 +43,8 @@ import { CommonModule } from '@angular/common';
         MatTabsModule,
         MatDialogModule,
         MatProgressSpinnerModule,
-        MatDividerModule
+        MatDividerModule,
+        ScrollingModule
     ], 
     providers : [
         MatDatepickerModule,

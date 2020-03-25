@@ -1,16 +1,18 @@
-<div class="container">
+<div class="container" infiniteScroll [infiniteScrollDistance]="2">
+  <div *ngIf="horaSolicitadas.length === 0">
+    <h3>No hay horas solicitadas</h3>
+  </div>
   <mat-card class="mt-3" *ngFor="let hora of horaSolicitadas">
     <mat-card-header>
       <mat-card-title>{{hora.especialidad.nombre}}</mat-card-title>
-    <mat-card-subtitle>{{hora.fechaConsulta}} {{hora.horaConsulta}}</mat-card-subtitle>
+      <mat-card-subtitle>{{hora.fechaConsulta}} {{hora.horaConsulta}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      Dr. {{ hora.profesional.nombres }} {{ hora.profesional.apellidos }}
-    {{ hora.observacion }}
+      Dr. {{ hora.profesional.nombres }} {{ hora.profesional.apellidos }} <br>
+      <h6>obs:</h6>{{ hora.observacion }}
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button color="danger" (click)="openDialogCancelar(hora)" >Cancelar</button>
-      <button mat-button color="primary" >Editar</button>
+      <button mat-button color="danger" (click)="openDialogCancelar(hora)">Cancelar</button>
     </mat-card-actions>
   </mat-card>
 </div>
