@@ -6,11 +6,12 @@ import { IonicModule } from '@ionic/angular';
 
 import { HorasBuscadorPageRoutingModule } from './horas-buscador-routing.module';
 
-import { HorasBuscadorPage } from './horas-buscador.page';
+import { HorasBuscadorPage, DialogConfirmationComponent } from './horas-buscador.page';
 import { AngularMaterialModule } from 'src/app/angularmaterial.module';
 import { IonicStorageModule } from '@ionic/storage';
-import { DialogConfirmationComponent } from './DialogConfirmation/dialog-confirmation.component';
+// import { DialogConfirmationComponent } from './DialogConfirmation/dialog-confirmation.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 @NgModule({
   imports: [
     CommonModule,
@@ -26,7 +27,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     DialogConfirmationComponent
   ], 
   entryComponents: [
-    DialogConfirmationComponent,
+     DialogConfirmationComponent,
+  ],
+  providers: [
   ]
 })
 export class HorasBuscadorPageModule {}

@@ -22,7 +22,10 @@ export class AuthMovilService {
 
 
     login(username: string, password: string) : Promise<any> {
-        return this.http.post(environment.api+'login',{'username': username, 'password': password},{ 'Content-Type': 'application/json'});
+        return this.http.post(environment.api+'login',{'username': username, 'password': password},{
+          'Content-Type':  'application/json',
+          'Authorization': 'Bearer '+localStorage.getItem(TOKEN_NAME)
+        });
     }
 
     getToken(): string {

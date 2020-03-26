@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { HoraEspecialista } from 'src/app/models/horaespecialista';
-import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { HorasService } from 'src/app/services/horas.service';
-import { DialogConfirmationComponent } from './DialogConfirmation/dialog-confirmation.component';
 import { finalize} from 'rxjs/operators';
-import $ from 'jquery';
+import { ModalController } from '@ionic/angular';
+import * as jwt_decode from 'jwt-decode';
+import { TOKEN_NAME } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-horas-buscador',
   templateUrl: './horas-buscador.page.html',
@@ -21,6 +22,8 @@ export class HorasBuscadorPage implements OnInit {
   page = 1;
   pageSize = 4;
   collectionSize = 0;
+  noselect= false;
+  public comment: string = '';
 
   get horas(): HoraEspecialista[] {
     return this.arr
@@ -31,13 +34,14 @@ export class HorasBuscadorPage implements OnInit {
   set horas(horas:HoraEspecialista[]){
     this.arr = horas;
   }
-
+  modal: HTMLIonModalElement;
   constructor(
     private horaService: HorasService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private modalController: ModalController) {
      }
 
-  ngOnInit() {
+  async ngOnInit() {
 
     
     this.buscando = true;
@@ -50,6 +54,10 @@ export class HorasBuscadorPage implements OnInit {
     }, error=> {
       console.error(error);
     })
+
+   
+
+    
     
   }
 
@@ -67,4 +75,43 @@ export class HorasBuscadorPage implements OnInit {
       }
     })
   }
+  onNoClick() {
+    this.noselect = false;
+  }
+  asignar(){
+    this.noselect = true;
+  }
+
 }
+
+@Component({
+    selector: 'dialog-confirmation',
+    templateUrl: 'dialog-confirmation.component.html'
+})
+export class DialogConfirmationComponent {
+    public comment: string = '';
+    constructor(
+        public dialogRef: MatDialogRef<DialogConfirmationComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private horaService: HorasService
+    ) {
+
+    }
+
+    onSubmit() {
+      var decoded = jwt_decode(localStorage.getItem(TOKEN_NAME));
+      this.horaService.asignarHoratoPaciente(this.data.hora, decoded.sub, this.comment)
+          .subscribe(result => {
+              if(result) {
+                  this.dialogRef.close({update: true,null: false});
+                  return;
+              }
+              this.dialogRef.close({ update: false, null: true });
+          })
+  }
+
+    onNoClick(): void {
+      this.dialogRef.close({ update: false });
+  }
+
+  }
