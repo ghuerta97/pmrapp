@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,13 +68,13 @@ public class HorasController {
     }
     @PreAuthorize("hasRole('ROLE_PACIENTE')")
     @PostMapping(value= "toPaciente")
-    public HoraEspecialista asignarPaciente(@RequestParam("id") Long id, @RequestBody JSONObject paciente, Principal user ) {
+    public ResponseEntity<HoraEspecialista> asignarPaciente(@RequestParam("id") Long id, @RequestBody JSONObject paciente, Principal user ) {
 
         Optional<HoraEspecialista> opHora = this.horasRepository.findById(id);
         Optional<Paciente> opPaciente = Optional.of(this.pacienteRepository.findByrun(paciente.getAsString("run")));
         Optional<List<HoraEspecialista>> oplisthora = Optional.of(this.horasRepository.findAllBypacienteAndFechaConsulta(opPaciente.get(),opHora.get().getFechaConsulta()));
         if(!oplisthora.get().isEmpty()) {
-            return null;
+            return new ResponseEntity<>(null,HttpStatus.CONFLICT);
         }
         if (opHora.isPresent() && opPaciente.isPresent()  && opPaciente.get().getRun().equalsIgnoreCase(user.getName())) {
             HoraEspecialista horaEspecialista = opHora.get();
@@ -80,10 +82,10 @@ public class HorasController {
             horaEspecialista.setAsignada(true);
             horaEspecialista.setObservacion(paciente.getAsString("comment"));
             this.horasRepository.save(horaEspecialista);
-            return horaEspecialista;
+            return new ResponseEntity<>(horaEspecialista,HttpStatus.CREATED) ;
         }
         
-        return null;
+        return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
     }
     @PreAuthorize("hasRole('ROLE_PACIENTE')")
     @PostMapping(value = "cancelar")
