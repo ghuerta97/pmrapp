@@ -140,6 +140,7 @@ public class PacienteController {
         if(op.isPresent()){
             Paciente pac = op.get();
             pac.setImagen(json.getAsString("urlImagen"));
+            this.patientRepo.save(pac);
             return new ResponseEntity<>(true,HttpStatus.FOUND);
         }
         return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
