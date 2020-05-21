@@ -136,12 +136,14 @@ public class PacienteController {
     @PreAuthorize("hasRole('ROLE_PACIENTE')")
     @PostMapping("updateImage")
     public ResponseEntity<Boolean> updatePicture(@RequestBody JSONObject json, Principal user){
+        System.out.println(user.getName());
         Optional<Paciente> op = Optional.ofNullable(this.patientRepo.findByrun(user.getName()));
         if(op.isPresent()){
             Paciente pac = op.get();
-            pac.setImagen(json.getAsString("urlImagen"));
+            System.out.println(json.getAsString("url"));
+            pac.setImagen(json.getAsString("url"));
             this.patientRepo.save(pac);
-            return new ResponseEntity<>(true,HttpStatus.FOUND);
+            return new ResponseEntity<>(true,HttpStatus.OK);
         }
         return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
     } 
