@@ -27,6 +27,7 @@ public class Paciente {
     @Column(unique = true, nullable = false)
     private String run;
     private String direccion;
+    private String imagen;
     private boolean cronico;
     @CreationTimestamp
     @Column( nullable = true)

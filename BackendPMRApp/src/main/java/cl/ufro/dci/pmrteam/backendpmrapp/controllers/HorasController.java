@@ -58,8 +58,8 @@ public class HorasController {
     }
     @PreAuthorize("hasRole('ROLE_PACIENTE')")
     @GetMapping("byPaciente")
-    public List<HoraEspecialista> indexHoras(@RequestParam("rut") String rut) {
-        Optional<Paciente> op = Optional.of(this.pacienteRepository.findByrun(rut));
+    public List<HoraEspecialista> indexHoras(Principal userAuth) {
+        Optional<Paciente> op = Optional.of(this.pacienteRepository.findByrun(userAuth.getName()));
        Paciente pac = new Paciente();
         if(op.isPresent()){
              pac = op.get();

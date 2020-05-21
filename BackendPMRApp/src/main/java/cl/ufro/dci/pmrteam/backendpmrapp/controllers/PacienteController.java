@@ -17,12 +17,15 @@ import cl.ufro.dci.pmrteam.backendpmrapp.repositorys.UsuarioRepository;
 import cl.ufro.dci.pmrteam.backendpmrapp.services.MailService;
 import cl.ufro.dci.pmrteam.backendpmrapp.utils.EmailVerificador;
 import cl.ufro.dci.pmrteam.backendpmrapp.utils.PasswordGenerate;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -129,4 +132,16 @@ public class PacienteController {
         
         return false;
     }
+    
+    @PreAuthorize("hasRole('ROLE_PACIENTE')")
+    @PostMapping("updateImage")
+    public ResponseEntity<Boolean> updatePicture(@RequestBody JSONObject json, Principal user){
+        Optional<Paciente> op = Optional.ofNullable(this.patientRepo.findByrun(user.getName()));
+        if(op.isPresent()){
+            Paciente pac = op.get();
+            pac.setImagen(json.getAsString("urlImagen"));
+            return new ResponseEntity<>(true,HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+    } 
 }
