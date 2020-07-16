@@ -100,6 +100,7 @@ public class PacienteController {
             if (Optional.ofNullable(pac).isPresent()) {
                 
                 String pass = PasswordGenerate.generatePassayPassword();
+                System.out.println("password = "+pass);
                 Optional<Usuario> d = Optional.ofNullable(pac.getUsuario());
                 if (d.isEmpty()) {
                     Usuario usuario = new Usuario();

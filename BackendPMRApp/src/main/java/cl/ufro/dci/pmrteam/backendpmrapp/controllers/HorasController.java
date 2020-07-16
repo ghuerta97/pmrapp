@@ -56,6 +56,7 @@ public class HorasController {
         }
         return null;
     }
+    
     @PreAuthorize("hasRole('ROLE_PACIENTE')")
     @GetMapping("byPaciente")
     public List<HoraEspecialista> indexHoras(Principal userAuth) {
@@ -66,12 +67,13 @@ public class HorasController {
         }
         return this.horasRepository.findAllBypaciente(pac);
     }
+    
     @PreAuthorize("hasRole('ROLE_PACIENTE')")
     @PostMapping(value= "toPaciente")
     public ResponseEntity<HoraEspecialista> asignarPaciente(@RequestParam("id") Long id, @RequestBody JSONObject paciente, Principal user ) {
 
         Optional<HoraEspecialista> opHora = this.horasRepository.findById(id);
-        Optional<Paciente> opPaciente = Optional.of(this.pacienteRepository.findByrun(paciente.getAsString("run")));
+        Optional<Paciente> opPaciente = Optional.of(this.pacienteRepository.findByrun(user.getName()));
         Optional<List<HoraEspecialista>> oplisthora = Optional.of(this.horasRepository.findAllBypacienteAndFechaConsulta(opPaciente.get(),opHora.get().getFechaConsulta()));
         if(!oplisthora.get().isEmpty()) {
             return new ResponseEntity<>(null,HttpStatus.CONFLICT);
@@ -112,4 +114,18 @@ public class HorasController {
             throw  new Exception("No existe tal hora");
         }
     }
+    
+    @PreAuthorize("hasRole('ROLE_PACIENTE')")
+    @PostMapping("updateImage")
+    public ResponseEntity<Boolean> updatePicture(@RequestParam("id") Long id, @RequestBody JSONObject json){
+        Optional<HoraEspecialista> op = this.horasRepository.findById(id);
+        if(op.isPresent()){
+            HoraEspecialista hora = op.get();
+            System.out.println(json.getAsString("url"));
+            hora.setQr(json.getAsString("url"));
+            this.horasRepository.save(hora);
+            return new ResponseEntity<>(true,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+    } 
 }
